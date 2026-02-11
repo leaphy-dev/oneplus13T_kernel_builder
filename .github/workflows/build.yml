@@ -187,8 +187,8 @@ jobs:
           echo "obj-y += hmbird_patch.o" >> Makefile
           fi
           cd ../../../
-          git add -A
-          git commit -m "Add HMBird GKI patch" || true
+          # git add -A
+          # git commit -m "Add HMBird GKI patch" || true
 
       - name: Apply lz4kd Patches
         if: ${{inputs.enable_feature_y }}
