@@ -226,8 +226,8 @@ jobs:
           
           #Remove check_defconfig
           sudo sed -i 's/check_defconfig//' ./common/build.config.gki
-          cd common
-          git add -A && git commit -a -m "BUILD Kernel"
+          # cd common
+          # git add -A && git commit -a -m "BUILD Kernel"
 
       - name: Add KPM Configuration Settings
         if: ${{inputs.enable_feature_x }}
@@ -238,7 +238,7 @@ jobs:
           #Remove check_defconfig
           sudo sed -i 's/check_defconfig//' ./common/build.config.gki
           cd common
-          git add -A && git commit -a -m "BUILD Kernel"
+          # git add -A && git commit -a -m "BUILD Kernel"
           
       - name: Add make name
         run: |
