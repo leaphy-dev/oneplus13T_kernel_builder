@@ -91,8 +91,23 @@ jobs:
           export KSU_VERSION=$KSU_VERSION
           sed -i "s/DKSU_VERSION=12800/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
 
-          cd ../..
-          git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git
+      - name: Set up lz4k
+        run: |
+           cd kernel_workspace
+           git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git
+
+           cd kernel_platform        
+           #lz4k
+           cp -r ../SukiSU_patch/other/zram/lz4k/include/linux/* ./common/include/linux
+           cp -r ../SukiSU_patch/other/zram/lz4k/lib/* ./common/lib
+           cp -r ../SukiSU_patch/other/zram/lz4k/crypto/* ./common/crypto
+           cp -r ../SukiSU_patch/other/zram/lz4k_oplus ./common/lib/
+           # Apply patches
+           cd ./common
+
+           cp ../../SukiSU_patch/hooks/syscall_hooks.patch ./
+           patch -p1 -F 3 < syscall_hooks.patch
+           echo "OK"
 
       - name: Apply HMBird GKI patch
         run: |
