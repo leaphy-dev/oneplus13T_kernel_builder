@@ -90,7 +90,8 @@ jobs:
           echo "KSUVER=$KSU_VERSION" >> $GITHUB_ENV
           export KSU_VERSION=$KSU_VERSION
           sed -i "s/DKSU_VERSION=12800/DKSU_VERSION=${KSU_VERSION}/" kernel/Makefile
-          
+
+          cd ../..
           git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git
 
       - name: Apply HMBird GKI patch
