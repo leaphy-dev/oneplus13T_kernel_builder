@@ -95,6 +95,7 @@ jobs:
         run: |
            cd kernel_workspace
            git clone https://github.com/SukiSU-Ultra/SukiSU_patch.git
+           git clone https://github.com/Numbersf/Action-Build.git
 
            cd kernel_platform        
            #lz4k
@@ -309,3 +310,71 @@ jobs:
         with:
           name: SuKiSu_${{ env.KSUVER }}_oneplus_13t
           path: ./AnyKernel3/*
+
+
+      # - name: Download and Unzip ZRAM
+      #   if: ${{inputs.enable_feature_y }}
+      #   id: zram_find
+      #   run: |
+      #     set -e
+      #     ZRAM_ZIP="${GITHUB_WORKSPACE}/kernel_workspace/Action-Build/ZRAM.zip"
+
+      #     if [ ! -f "$ZRAM_ZIP" ]; then
+      #       echo "❌ 未找到 ZRAM.zip: $ZRAM_ZIP"
+      #       echo "upload=false" >> "$GITHUB_OUTPUT"
+      #       exit 0
+      #     fi
+
+      #     unzip "$ZRAM_ZIP" -d ZRAM-Module
+
+      #     CONFIG_PROP="ZRAM-Module/config.prop"
+      #     if [ -f "$CONFIG_PROP" ]; then
+      #       echo "修改 config.prop"
+
+      #       ZRAM_ALGO="lz4kd"
+      #       ZRAM_SIZE=17179869184
+            
+      #       sed -i "s/^ZRAM_ALGO=.*/ZRAM_ALGO=${ZRAM_ALGO}/" "$CONFIG_PROP"
+      #       sed -i "s/^ZRAM_SIZE=.*/ZRAM_SIZE=${ZRAM_SIZE}/" "$CONFIG_PROP"
+      #       echo "ZRAM_ALGO=${ZRAM_ALGO}"
+      #       echo "ZRAM_SIZE=${ZRAM_SIZE}"
+      #     else
+      #       echo "❌ 未找到 config.prop"
+      #       echo "upload=false" >> "$GITHUB_OUTPUT"
+      #       exit 0
+      #     fi
+
+      #     target="./ZRAM-Module/zram/zram.ko"
+      #     echo "查找 zram.ko 模块文件..."
+      #     search_paths=(
+      #       "./kernel_workspace/kernel_platform/out"
+      #       "./kernel_workspace/device/qcom"
+      #     )
+      #     zram_path=""
+      #     for path in "${search_paths[@]}"; do
+      #       zram_path=$(find "$path" -type f -name "zram.ko" | head -n 1)
+      #       [ -n "$zram_path" ] && break
+      #     done
+      #     if [ -z "$zram_path" ]; then
+      #       zram_path=$(find "./kernel_workspace" -type f -name "zram.ko" | head -n 1)
+      #     fi
+      #     if [ -n "$zram_path" ] && [ -f "$zram_path" ]; then
+      #       echo "ZRAM module file finally located at: $zram_path"
+      #       mkdir -p "$(dirname "$target")"
+      #       if [ "$(realpath "$zram_path")" != "$(realpath "$target")" ]; then
+      #         cp "$zram_path" "$target"
+      #       else
+      #         echo "源文件与目标路径相同，跳过复制"
+      #       fi
+      #     else
+      #       echo "未找到 zram.ko 文件，可能是未支持的内核版本或者未成功构建"
+      #       echo "upload=false" >> "$GITHUB_OUTPUT"
+      #       exit 0
+      #     fi
+
+      # - name: Upload ZRAM Module
+      #   if:  inputs.enable_feature_y && steps.zram_find.outputs.upload != 'false'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ZRAM-Module
+      #     path: ZRAM-Module/*
