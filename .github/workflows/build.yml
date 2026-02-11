@@ -46,10 +46,10 @@ jobs:
           remove-haskell: 'true'
           remove-codeql: 'true'
           
-      # - name: Configure Git
-      #   run: |
-      #     git config --global user.name ""
-      #     git config --global user.email ""
+      - name: Configure Git
+        run: |
+          git config --global user.name "leaphy-dev"
+          git config --global user.email "leaf443@outlook.com"
 
       - name: Install dependencies
         run: |
