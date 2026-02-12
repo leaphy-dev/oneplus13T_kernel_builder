@@ -104,10 +104,10 @@ jobs:
            cp -r ../SukiSU_patch/other/zram/lz4k/crypto/* ./common/crypto
            cp -r ../SukiSU_patch/other/zram/lz4k_oplus ./common/lib/
            # Apply patches
-           cd ./common
+           # cd ./common
 
-           cp ../../SukiSU_patch/hooks/syscall_hooks.patch ./
-           patch -p1 -F 3 < syscall_hooks.patch
+           # cp ../../SukiSU_patch/hooks/syscall_hooks.patch ./
+           # patch -p1 -F 3 < syscall_hooks.patch
            echo "OK"
 
       - name: Apply HMBird GKI patch
@@ -206,7 +206,9 @@ jobs:
           # Add VFS configuration settings
           # echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./common/arch/arm64/configs/gki_defconfig
           # echo "CONFIG_KSU_MANUAL_HOOK=y" >> ./common/arch/arm64/configs/gki_defconfig
-          
+
+
+          echo "CONFIG_KSU_SUSFS=n" >> ./common/arch/arm64/configs/gki_defconfig
           # Add SUSFS configuration settings
           # echo "CONFIG_KSU_SUSFS=y" >> ./common/arch/arm64/configs/gki_defconfig
           # echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
