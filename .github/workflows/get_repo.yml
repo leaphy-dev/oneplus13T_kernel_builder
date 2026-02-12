@@ -69,8 +69,7 @@ jobs:
           tar -czf kernel_workspace.tar.gz kernel_workspace
 
       - name: Upload kernel_workspace artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: kernel_workspace
           path: kernel_workspace.tar.gz
-          retention-days: 7
